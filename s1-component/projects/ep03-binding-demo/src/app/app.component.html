@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+
+  <div class="container">
+    <span class="navbar-brand">DATA BINDING</span>
+
+    <ul class="navbar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Interpolation</a>      
+      </li>
+
+      <li class="nav-item">
+        <a [routerLink]="['/props']" routerLinkActive="active" class="nav-link">properties</a>      
+      </li>
+
+      <li class="nav-item">
+        <a [routerLink]="['/attr']" routerLinkActive="active" class="nav-link">Attribute</a>      
+      </li>
+
+      <li class="nav-item">
+        <a [routerLink]="['/events']" routerLinkActive="active" class="nav-link">Event</a>      
+      </li>
+
+      <li class="nav-item">
+        <a [routerLink]="['/two-way']" routerLinkActive="active" class="nav-link">Two Way</a>      
+      </li>
+
+    </ul>
+  </div>
+
+
+
+</nav>
+
+<div class="container mt-4">
+  
+  <router-outlet></router-outlet>
+</div>
+

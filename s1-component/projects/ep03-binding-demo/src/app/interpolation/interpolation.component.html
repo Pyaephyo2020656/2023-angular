@@ -1,0 +1,32 @@
+<h1>{{model.title}}</h1>
+
+
+
+
+<p>{{data | json}}</p>
+
+<pre>
+    {{data | json}}
+</pre>
+
+<br>
+
+<h1>Input Variable</h1>
+
+<ol>
+    <li *ngFor="let item of array" >{{item}}</li>
+</ol>
+
+<br>
+
+<h3 #header>Template Reference</h3>
+
+<p>{{header.innerText}}</p>
+
+<input #keyword type="text" (keyup)="0" class="form-control w-50 " placeholder="Enter Keywords">
+<span>{{keyword.value}}</span>
+
+<div class="mt-4">
+    <img src="/assets/images/{{model.image}}" class="img-fluid w-50" alt="Cover Photo">
+</div>
+

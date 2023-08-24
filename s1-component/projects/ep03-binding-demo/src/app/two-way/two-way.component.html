@@ -1,0 +1,49 @@
+<h1>Two Way Data Binding</h1>
+
+<div class="card mb-4">
+
+    <div class="card-header">Input & Event Binding</div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="form-group col">
+                <label>Parent Input</label>
+                <input #parentInput type="text" class="form-control" (input)="parentValue= parentInput.value">
+            </div>
+
+            <div class="form-group col">
+                <label for="" class="">Parent Output</label>
+                <span class="form-control">{{parentValue}}</span>
+            </div>
+        </div>
+
+        <div class="form-group col">
+            <app-child-input [value]="parentValue" (valueChange)="parentValue = $event"></app-child-input>
+        </div>
+ </div>
+
+ <div class="card">
+    <div class="card-header">Using Form Module
+
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col">
+                    <label>Output Only</label>
+                    <input #formOut (input)="formValue = formOut.value" type="text" class="form-control">
+                </div>
+
+                <div class="form-group col">
+                    <label>Text Interpolation</label>
+                    <span class="form-control">{{formValue}}</span>
+                </div>
+
+                <div class="form-group col">
+                    <label for="">Form Model</label>
+                    <input type="text" [(ngModel)] = "formValue" class="form-control">    
+                </div>
+        </div>
+        </div>
+    </div>
+ </div>
+
