@@ -1,0 +1,126 @@
+<h2>Simple Form</h2>
+
+<div class="row">
+    <!-- Form -->
+    <div class="col-8">
+        <div class="card shadow">
+            <div class="card-header">Form</div>
+            <div class="card-body c-body">
+                <form #form="ngForm" (ngSubmit)="save()">
+                    <div class="form-group mb-2">
+                        <label>Name</label>
+                        <input #nameInput="ngModel" placeholder="Enter Name"  name="name" [(ngModel)]="student.name" required type="text" class="form-control">
+                        <div *ngIf="nameInput.invalid && (nameInput.touched || nameInput.dirty)"  class="text-info mt-2">Please Enter Student Name!</div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label class="d-block me-4">Gender</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="gender" id="Male" value="Male" [(ngModel)]="student.gender" class="form-check-input">
+                            <label for="Male" class="form-check-label">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline mb-2">
+                            <input type="radio" name="gender" id="Male" value="Female" [(ngModel)]="student.gender" class="form-check-input">
+                            <label for="Female" class="form-check-label">Female</label>
+                        </div>
+                    </div>
+
+                    <fieldset class="row" ngModelGroup="contact">
+                        <div class="form-group mb-2 col">
+                            <label>Phone</label>
+                            <input #phoneInput="ngModel" required phone type="text" placeholder="Enter Phone"  name="phone" [(ngModel)]="student.contact.phone" class="form-control">
+                            <div *ngIf="phoneInput.invalid && (phoneInput.touched || phoneInput.dirty)" class="text-info">
+                                Invalid Phone Number.Please Enter Valid Phone Number!. eg.09x-xxxx-xxxx
+                            </div>
+                        </div>
+                        <div class="form-group mb-2 col">
+                            <label>Email</label>
+                            <input #emailInput="ngModel" placeholder="Enter Email" required email  name="email" [(ngModel)]="student.contact.email" type="text" class="form-control">
+                            <div *ngIf="emailInput.invalid && (emailInput.touched || emailInput.dirty)" class="text-info">
+                               Please Enter Email Address
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    
+
+                    <div class="form-group mb-2">
+                        <label>Course</label>
+                        <select class="form-control" name="course" [(ngModel)]="student.course">
+                            <option value="">Select One</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="TypeScript">TypeScript</option>    
+                            <option value="Angular">Angular</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label ngModelGroup="interests" class="d-block">Interest</label>
+                        <div *ngFor="let item of interests" class="form-check form-check-inline">
+                            <input type="checkbox" [(ngModel)]="student.interests[item]" [name]="item" [id]="item" class="form-check-input">
+                            <label [for]="item" class="form-check-label">{{item}}</label>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group mb-2">
+                        <label>Type of Student</label>
+                        <div class="form-check">
+                            <input type="checkbox" [(ngModel)]="student.newStudent" name="newStudent" id="type" class="form-check-input">
+                            <label for="type" class="form-check-label">{{student.newStudent ? 'New' : 'Old'}} Student</label>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <button type="reset" class="btn btn-outline-primary w-100 mb-2 shadow">Clear</button>
+                        <button [disabled]="form.invalid" type="submit" class="btn btn-outline-danger w-100 mb-2 shadow">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Value -->
+
+    <div class="col">
+        <div class="card shadow">
+            <div class="card-header">Form Value</div>
+            <div class="card-body">
+                <pre>{{student | json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Data List -->
+
+<table class="mt-4 table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Gender</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let s of list">
+            <td>{{s.name}}</td>
+            <td>{{s.newStudent ? 'New' : 'Old'}}Student</td>
+            <td>{{s.gender}}</td>
+            <td>{{s.contact.phone}}</td>
+            <td>{{s.contact.email}}</td>
+            <td>{{s.course}}</td>
+            <td>
+                <a  (click)="edit(s)" class="btn btn-outline-primary">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
