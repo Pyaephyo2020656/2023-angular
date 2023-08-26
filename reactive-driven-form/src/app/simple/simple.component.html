@@ -1,0 +1,85 @@
+<h3>Simple Reactive Form</h3>
+
+<div class="row mt-3">
+
+
+    <div class="col">
+        <div class="card card-color shadow">
+            <div class="c-8 card-header">Reactive Form</div>
+            <div [formGroup]="form" class="card-body">
+                <div class="form-group">
+                    <label class="mb-2">Name</label>
+                    <input type="text" formControlName="name" class="form-control">
+                </div>
+                
+                 <div class="form-group">
+                    <label class="mb-2">Category</label>
+                    <select formControlName="category" class="form-control">
+                        <option formControlName="" value="">Select One</option>
+                        <option *ngFor="let item of categories" [ngValue]="item">{{item.name}}</option>
+                    </select>
+                 </div>
+
+                 <fieldset formGroupName="size">
+                    <div class="form-group">
+                        <label class="mb-2">US Size</label>
+                        <input type="number" class="form-control" formControlName="us">
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">UK Size</label>
+                        <input type="number" class="form-control" formControlName="uk">
+                    </div>
+                 </fieldset>
+                <div class="form-group" formArrayName="colors">
+                    <label class="mb-2">Colors</label>
+                    <div *ngFor="let item of colors.controls; index as i; last as l;"  
+                     [class.mb-2]="!l"
+                    class="input-group">
+                  
+                        <input  type="text" [formControlName]="i" class="form-control">
+                        <div class="input-group-append">
+                            <button (click)="removeColor(i)" class="input-group-btn btn btn-outline-danger">Delete</button>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </div>
+
+                <div class="form-group" formArrayName="props">
+                    <label>Properties</label>
+                    <div *ngFor="let item of props.controls; index as i; last as l" [class.mb-2]="!l"
+                         [formGroupName]="i" class="row">
+                        <div class="col-5">
+                            <input type="text" formControlName="property" class="form-control" placeholder="Enter Props Name">
+                        </div>
+                        <div class="col input-group">
+                            <input formControlName="value" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <button class="input-group btn btn-outline-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-outline-primary form-control mt-4" (click)="addColor()">Add Color</button>
+                    <button class="btn btn-outline-info form-control mt-2" (click)="addProp()">Add Props</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow">
+            <div class="card-header"> Form Value</div>
+            <div class="card-body">
+                <pre>{{form.value | json}}</pre>
+    
+            </div>
+        </div>
+    </div>
+    
+</div>
