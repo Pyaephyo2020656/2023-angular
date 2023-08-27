@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SimpleComponent } from './simple/simple.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ValidationsComponent } from './validations/validations.component';
+import { ValueChangesComponent } from './value-changes/value-changes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SimpleComponent
+    SimpleComponent,
+    ValidationsComponent,
+    ValueChangesComponent
     
   ],
   imports: [

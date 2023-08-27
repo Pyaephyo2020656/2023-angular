@@ -21,7 +21,7 @@ export class SimpleComponent {
    constructor(private builder:FormBuilder){
 
      this.form = builder.group({
-      name:"",
+      name:["", [Validators.required, Validators.maxLength(8)]],
       category:"", 
       price: 0,
       size: builder.group(
@@ -83,5 +83,9 @@ export class SimpleComponent {
     if(!this.props.length){
       this.addProp()
     }
+   }
+
+   showError(name:string){
+     return this.form.get(name)?.invalid && (this.form.get(name)?.touched || this.form.get(name)?.dirty)
    }
 }
