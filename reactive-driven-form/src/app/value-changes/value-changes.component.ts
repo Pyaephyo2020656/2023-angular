@@ -1,33 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, Subject, of } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, of, Subject } from 'rxjs';
+
+import { ProductService } from './product.service';
 
 @Component({
   templateUrl: './value-changes.component.html',
-  styleUrls: ['./value-changes.component.css']
+  styleUrls: ['./value-changes.component.css'],
+  providers: [ProductService]
 })
 export class ValueChangesComponent {
 
-  categories = ["Foods", "Drinks", "Snacks"]
-  products = [
-    { cat: "Foods", name: "Potato Chips"},
-    { cat: "Foods", name: "Hot Dogs"},
-    { cat: "Drinks", name: "Pepsi"},
-    { cat: "Drinks", name: "Cocacola"},
-    { cat: "Snacks", name: "Candy"},
-    { cat: "Snacks", name: "Chocalat"},
-    { cat: "Foods", name: "Humberger"}
-  ]
+  categories:string[] = []
+  products: any[] = []
 
   form:FormGroup
  
- constructor(builder:FormBuilder){
+ constructor(builder:FormBuilder, service: ProductService){
+
+  this.categories = service.getCategory()
+
    this.form = builder.group({
     category:"",
-    product: ""
+    product: ["",Validators.required]
   
    }
    )
+
+   this.form.get('category')?.valueChanges.subscribe(cat => {
+    this.products = service.search(cat)
+   })
+
+   this.form.valueChanges.subscribe(console.log)
+   this.form.statusChanges.subscribe(console.log)
    
  }
 
