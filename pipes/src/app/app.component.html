@@ -1,0 +1,39 @@
+<div class="container pt-4">
+   <h3>Pipes Demo</h3>
+
+   <h5>String Pipes</h5>
+
+   <div class="row mb-2">
+      <div class="col">
+          <div class="card">
+            <div class="card-header">Upper Case</div>
+            <div class="card-body">
+                {{title | uppercase}}
+            </div>
+          </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header">Lower Case</div>
+          <div [innerText]="title | uppercase | lowercase" class="card-body">
+            
+          </div>
+        </div>
+    </div>
+
+     <div class="col"></div>
+   </div>
+
+   <!-- Number Pipes -->
+   <h5>Number Pipe</h5>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">Percentage Pipe {{data1}}</div>
+          <div class="card-body">
+            {{data1 | percent}}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
