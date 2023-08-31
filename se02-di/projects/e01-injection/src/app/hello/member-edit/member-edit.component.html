@@ -1,0 +1,29 @@
+<h5>Hello DI:{{form.value.id ? 'Edit' : 'Add'}} Member</h5>
+
+<form [formGroup]="form" class="mt-4 w-50">
+
+    <div class="form-group">
+        <label class="form-label">Role</label>
+        <select class="form-control" formControlName="role" >
+
+            <option *ngFor="let item of roles" value="item">{{item || 'Select Role'}}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Name</label>
+        <input formControlName="name" type="text" class="form-control" placeholder="Enter Name">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input formControlName="phone" type="tel" class="form-control" placeholder="Enter Phone">
+    </div>
+    <div class="form-group">
+        <label class="form-label">Email</label>
+        <input formControlName="email" type="eamil" class="form-control" placeholder="Enter Email">
+    </div>
+
+    <div class="form-group">
+        <button  [disabled]="form.invalid" (click)="save()" class="btn btn-outline-primary  mt-4"><i class="fa fa-save"></i> Save</button>
+    </div>
+</form>

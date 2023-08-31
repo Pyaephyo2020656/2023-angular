@@ -1,0 +1,57 @@
+<h5>Hello DI: Member CRUD</h5>
+
+<form [formGroup]="form" class="row mt-4">
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Role</label>
+            <select formControlName="role" class="form-control">
+                <option *ngFor="let item of roles" value="item">{{item || 'All Role'}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input formControlName="name" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="col-1 form-group">
+        <label class="form-label">Search</label>
+        <button (click)="search()" class="btn btn-outline-primary form-control wt-50"> <i class="fa fa-search"></i> Search</button>
+    </div>
+
+    <div class="col-2 form-group ">
+        <label class="form-label">Add New</label>
+        <button [routerLink]="['/hello', 0]" routerLinkActive="router-link-active"  class="btn btn-outline-danger form-control wt-50"> <i class="fa fa-plus"></i> Add New</button>
+        
+    </div>
+</form>
+
+<table class="table table-striped mt-2">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.id}}</td>
+            <td>{{item.role}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.email}}</td>
+            <td>
+                <a [routerLink]="['/hello, item.id']" routerLinkActive="router-link-active"  class="btn-link"><i class="fa fa-pencil"></i>Edit</a>
+            </td>
+            
+        </tr>
+    </tbody>
+</table>
