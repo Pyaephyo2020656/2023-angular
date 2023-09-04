@@ -1,19 +1,48 @@
 <h5><i class="fa fa-tags"></i> Category Management</h5>
 
-<div class="form-inline mt-4">
-    <select  class="form-control mr-2">
+<div [formGroup]="form" class="form-inline mt-4">
+    <select formControlName="type" class="form-control mr-2">
         <option value="">All Type</option>
-        <option value="Income">Income</option>
-        <option value="Expense">Expense</option>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
     </select>
 
-    <input type="text" class="form-control mr-2" placeholder="Search Name..">
-    <button class="btn btn-outline-primary mr-2"> <i class="fa fa-search"></i> Search</button>
+    <input  formControlName="name" type="text" class="form-control mr-2" placeholder="Search Name..">
+    <button (click)="search()" class="btn btn-outline-primary mr-2"> <i class="fa fa-search"></i> Search</button>
     <button (click)="addNew()" class="btn btn-outline-danger"><i class="fa fa-plus"></i> Add New</button>
 </div>
 
-<!-- Grid -->
+<!-- Table -->
+
+<table class="table table-striped mt-4" *ngIf="list.length">
+    <thead class="bg-info">
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Deleted</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.id}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.name}}</td>
+            <td>
+                <span (click)="delete(item.id)" class="btn-link"><i class="fa" [class.fa-check] = "!item.deleted"
+                     [class.fa-close]="item.deleted" ></i></span></td>
+                
+            <td>
+                <span (click)="edit(item)" class="btn-link">
+                    <i class="fa fa-pencil"></i>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <div id="edit-dialog" class="modal fade">
-    <category-edit></category-edit>
-</div>
+    <category-edit [data]="target" (onSave)="save($event)"></category-edit>
+</div> 

@@ -52,4 +52,9 @@ export class CategoriesComponent {
 
   }
 
+  delete(id:number){
+       this.service.switchDeleteStatus(id)
+       this.search()
+  }
+
 }

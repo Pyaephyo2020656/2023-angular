@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BalanceDetailsVO } from 'src/app/models/balance.model';
+import { BalanceService } from 'src/app/models/balance.service';
 
 @Component({
   templateUrl: './balance-list.component.html',
@@ -7,12 +9,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BalanceListComponent {
 
-  type = "Balance List"
+  type = ""
 
-  constructor(route:ActivatedRoute){
+  list:readonly BalanceDetailsVO[]= []
+
+  constructor(route:ActivatedRoute, private service:BalanceService){
     route.params.subscribe(params => {
       this.type = params['type']
     })
+  }
+
+  search(form:any){
+    this.list = this.service.searchDetails(form)
   }
 
 }

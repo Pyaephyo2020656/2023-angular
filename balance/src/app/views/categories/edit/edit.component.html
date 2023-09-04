@@ -1,7 +1,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
-        <h5 class="modal-header">
-            Edit Category
+        <h5 class="modal-header bg-secondary">
+          {{form.value.id ? 'Edit' : 'Add '}}  Category
         </h5>
 
         <form [formGroup]="form" class="modal-body">

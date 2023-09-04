@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category, Type } from '../../../models/balance.model';
+import { CategoryService } from 'src/app/models/category.service';
 
 @Component({
   selector:'category-edit',
@@ -22,14 +23,22 @@ export class EditComponent {
   @Output()
   onSave= new EventEmitter
 
-  constructor(builder:FormBuilder){
+  constructor(builder:FormBuilder, service:CategoryService){
     this.form = builder.group({
       id: 0,
       type: ['',Validators.required],
-      name:['',Validators.required],
+      name:['',[Validators.required, (control:AbstractControl) => {
+
+        if(service.isAlreadyExistName(control.value)){
+            //Error
+            return {
+              error: 'Category name is already exist'
+            }
+        }
+
+        return null
+      }]],
       deleted:false
-    },{
-      Validators : []
     })
   }
 

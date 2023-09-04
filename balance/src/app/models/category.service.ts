@@ -1,21 +1,42 @@
 import { Injectable } from "@angular/core";
-import { Category, Type } from "./balance.model";
+import { Category, StorageService, Type } from "./balance.model";
 import { IdGenerator } from "./id.generator";
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
+import { JsonPipe } from "@angular/common";
+
+const STORAGE_KEY = "com.jdc.balance.category"
+
+export type CategorySearch = {type:Type | '', name?:string, deleted?:boolean}
 
 @Injectable({
     providedIn:'root'
+
 })
-export class CategoryService{
+export class CategoryService implements StorageService{
+
+    private resource:  {[id:number]:Category} = {}
 
     constructor(private idGen:IdGenerator){}
 
-    private resource:  {[id:number]:Category} = {}
+
+    loadResource(): void {
+        const data = localStorage.getItem(STORAGE_KEY)
+        if(data){
+            this.resource = JSON.parse(data)
+        }
+    }
+
+
+    saveResource(): void {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.resource))
+    }
+
+   
 
     //Home, Income, Expense => Type or ''
     //Category Management => Type or '' & name
 
-    search(params:{type:Type | '', name?:string, deleted?:boolean}):readonly Category[]{
+    search(params:CategorySearch):readonly Category[]{
 
         return Object.values(this.resource).filter(cat => {
             if(params.type && cat.type !== params.type){
@@ -29,10 +50,11 @@ export class CategoryService{
         })
     }
 
-    delete(id:number){
+    switchDeleteStatus(id:number){
         const target = this.resource[id]
         if(target){
-            target.deleted = true
+            target.deleted = !target.deleted
+            this.saveResource()
         }
     }
 
@@ -45,11 +67,15 @@ export class CategoryService{
             data.id = id
             this.resource[id] = data
         }
+
+        this.saveResource()
     }
 
-    validateName(control:AbstractControl){
-
+    isAlreadyExistName(name:string):boolean{
+       return  Object.values(this.resource).find( category => category.name === name) != undefined
     }
+
+ 
 
     getNewObject():Category{
         return  {
