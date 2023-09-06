@@ -5,6 +5,10 @@ import { BalanceDetailsVO,  BalanceVO, BalanceWithDetails, BalanceWithDetialVO, 
     providedIn: 'root'
 })
 export class BalanceService  implements StorageService{
+    
+  save(value: BalanceWithDetails): number {
+      return 1
+    }
 
 
     findViewById(id: number): BalanceWithDetialVO | null {

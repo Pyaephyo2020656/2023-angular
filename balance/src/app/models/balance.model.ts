@@ -27,8 +27,8 @@ export interface BalanceVO{
     date: Date
     category: Category
     employee:string
-    income:number
-    expense:number
+    Income:number
+    Expense:number
     balance:number
 }
 

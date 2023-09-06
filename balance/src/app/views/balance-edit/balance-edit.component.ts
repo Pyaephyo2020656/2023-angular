@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import {  Category, Type } from 'src/app/models/balance.model';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Category, Type } from 'src/app/models/balance.model';
 import { BalanceService } from 'src/app/models/balance.service';
 import { CategorySearch, CategoryService } from 'src/app/models/category.service';
+
+const MIN_AMOUNT = 200
 
 @Component({
   templateUrl: './balance-edit.component.html',
@@ -18,23 +20,32 @@ export class BalanceEditComponent {
 
   constructor(
     private builder:FormBuilder, 
+    private router:Router,
     route:ActivatedRoute,
     catService:CategoryService, 
     private service:BalanceService){
 
 
+    //Build Form
     this.form = builder.group({
       balance: builder.group({
         id:0,
-        useDate:['',[Validators.required, Validators.pattern('yyyy-MM-dd')]],
+        useDate:['',Validators.required],
         categoryId:['',[Validators.required]],
-        total: [0, Validators.min(500)],
+        total: [0, Validators.min(MIN_AMOUNT)],
         employee:['',Validators.required]
       }),
       details:builder.array([
 
       ])
     })
+
+    // Calculate Total 
+     this.detailsFormArray.valueChanges.subscribe(data => {
+        this.form.get('balance')?.patchValue({total : this.detailsFormArray.controls.map(a => a.value.amount || 0).reduce((a,b) => a +b)})
+     })
+
+    // Get Params
 
 
     route.params.subscribe(params => {
@@ -55,16 +66,16 @@ export class BalanceEditComponent {
 
           //Set Detial Data to Edit
 
-          
-
-
+          dto.details.forEach( d => {
+            const control = this.getDetailsControl()
+            control.patchValue(d)
+            this.detailsFormArray.push(control)
+          })
         }else{
           categorySearch.deleted = false
+          this.addDetails()
         }
-
-
         this.categories = catService.search(categorySearch)
-
       }
     })
   }
@@ -72,13 +83,37 @@ export class BalanceEditComponent {
 
   save(){
 
+    //save form data
+   const id:number =  this.service.save(this.form.value)
+
+   //Navigate to Detials View
+
+   this.router.navigate(["/balance/", this.type, id , 'details'])
   }
 
   addDetails(){
+    this.detailsFormArray.push(this.getDetailsControl())
+  }
 
+  removeDetails(index:number){
+    this.detailsFormArray.removeAt(index)
+    if(this.detailsFormArray.length == 0){
+      this.addDetails()
+    }
+  }
+
+  get detailsFormArray():FormArray {
+    return this.form.get('details') as FormArray
   }
 
   private getDetailsControl():FormGroup{
-    return this.builder.group({})
+    return this.builder.group({
+      id:0,
+      balanceId:0,
+      item:['',Validators.required],
+      unit:[0,Validators.min(1)],
+      amount:[0,Validators.min(MIN_AMOUNT)],
+      remark:''
+    })
   }
 }
