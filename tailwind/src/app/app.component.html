@@ -1,0 +1,30 @@
+<!-- Navbar -->
+   <div class="navbar">
+    <nav>
+         <!-- Page Titel -->
+         <h1>Tailwind CSS</h1>
+
+         <!-- Menu -->
+         <div class="menu">
+          <a [routerLink]="['/hello']" routerLinkActive="active" >Hello</a>
+          <a [routerLink]="['/form']" routerLinkActive="active" >Forms</a>
+          <div class="dropdown">
+             <a href="#">Dropdown Menu</a>
+             <div class="dropdown-menu">
+              <a href="#">Menu One</a>
+              <a href="#">Menu Two</a>
+              <a href="#">Menu Three</a>
+             </div>
+          </div>
+          <a href="nothing">Nothing</a>
+         </div>
+    </nav>
+     
+   </div>
+
+
+<!-- Content -->
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

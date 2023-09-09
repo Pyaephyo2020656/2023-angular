@@ -1,0 +1,107 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+/* You can add global styles to this file, and also import other style files */
+
+@layer components{
+    .form input, .form select, .form textarea {
+        @apply block rounded-lg w-full border rounded-b-none border-transparent bg-gray-200
+    }
+
+    .form .form-group{
+        @apply mb-4
+    }
+
+    .form input {
+        @apply h-12 text-center
+    }
+
+    .form select {
+        @apply h-12 text-center
+    }
+
+    .form textarea {
+        @apply h-16 text-center
+    }
+
+    button {
+        @apply border border-gray-500 px-4 py-2 rounded-lg hover:border-transparent hover:bg-gray-500 hover:text-white
+    }
+
+    .content {
+        @apply container mx-auto pt-4
+    }
+
+    .content > * > h1{
+        @apply text-3xl font-bold text-primary-dark
+    }
+
+    .navbar {
+        @apply bg-primary hover:shadow-xl
+
+    }
+
+    .navbar nav {
+        @apply container mx-auto flex items-center justify-between
+    }
+
+
+    
+    .navbar nav > h1 {
+        @apply text-2xl text-secondary-light
+    }
+
+    .navbar nav .menu {
+        @apply flex
+    }
+
+    .navbar nav .menu a {
+        @apply p-4 text-secondary block hover:bg-primary-light
+    }
+
+    .navbar nav .menu a.active {
+        @apply text-white 
+    }
+
+    .navbar nav .menu > .dropdown {
+        @apply relative
+    }
+
+    .dropdown > .dropdown-menu {
+        @apply invisible absolute bg-primary-light w-48 shadow-xl
+    }
+
+    .dropdown:hover > .dropdown-menu {
+        @apply visible 
+    }
+
+    .dropdown:hover >  a {
+        @apply bg-primary-light
+    }
+
+    .dropdown:hover > .dropdown-menu > a {
+        @apply hover:bg-primary
+    }
+
+    .item-group .item {
+        @apply block p-2 mb-2 border-b hover:bg-purple-100
+    }
+
+    .item-group .item.active {
+        @apply font-extrabold text-primary-dark
+    }
+
+    .card {
+        @apply p-4 mb-4 border rounded
+    }
+
+    .card h1{
+        @apply mb-4 text-lg text-primary
+    }
+
+
+
+
+}
